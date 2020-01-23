@@ -1,0 +1,13 @@
+# data mysql docker
+data
+
+# ignore docker files
+
+docker-compose.yml
+php/
+node/
+api/
+
+# Outros
+sogg_vaga_desafio.pdf
+
