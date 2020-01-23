@@ -1,0 +1,91 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}Listar clientes{% endblock %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>Clientes cadastrados</h1>
+    <a class="btn btn-success" title="Cadastrar novo cliente" href={{ path('register.get') }}>Cadastrar novo</a>
+</div>
+
+{% if clientes is defined %}
+
+<div class="row">
+    <form id="form-search-nome" class="form-inline my-2 my-lg-2">
+        <label class="sr-only" for="inlineFormInputGroup">Buscar</label>
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+            <input id="ipt-search-nome" type="text" name="nome" class="form-control mr-sm-2" id="inlineFormInputGroup" placeholder="Buscar por nome...">
+        </div>
+    </form>
+
+    <form id="form-search-cpf" class="form-inline my-2 my-lg-2">
+        <label class="sr-only" for="inlineFormInputGroup">Buscar</label>
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+            <input id="ipt-search-cpf" type="text" name="cpf" class="form-control mr-sm-2" id="inlineFormInputGroup" placeholder="Buscar por CPF...">
+        </div>
+    </form>
+</div>
+
+<table id="clientes" class="table">
+<thead>
+    <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">CPF</th>
+        <th scope="col">Data de Nascimento</th>
+        <th scope="col">E-mail</th>
+        <th scope="col"></th>
+    </tr>
+</thead>
+    <tbody>
+        {% for cliente in clientes %}
+        <tr>
+            <td>{{ cliente.nome }}</td>
+            <td>{{ cliente.cpf }}</td>
+            <td>{{ cliente.dataNasc }}</td>
+            <td>{{ cliente.email }}</td>
+            <td>
+                <a href="/cliente/editar/{{ cliente.id }}" class="btn btn-info">
+                    <i class="fas fa-user-edit"></i>
+                </a>
+            </td>
+            <td>
+                <a href="/cliente/remover/{{ cliente.id }}" class="btn btn-danger">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}
+
+{% block javascript %}
+{% include '@app/search.html.twig' with {
+    myRoute: 'home.get',
+    form: 'form-search-nome',
+    ipt: 'ipt-search-nome',
+    table: 'clientes',
+    search: 'nome'
+} only %}
+
+{% include '@app/search.html.twig' with {
+    myRoute: 'home.get',
+    form: 'form-search-cpf',
+    ipt: 'ipt-search-cpf',
+    table: 'clientes',
+    search: 'cpf'
+} only %}
+{% endblock %}
+

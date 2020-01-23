@@ -1,0 +1,21 @@
+<script>
+    $("#{{ ipt }}").keyup((event) => {        
+        event.preventDefault()
+        $.ajax({
+            url: "{{ path(myRoute) }}?{{ search }}=" + $('#{{ ipt }}').val(),
+            cache: false,
+            headers: { "cache-control": "no-cache" },
+            type: 'get',
+            error: (err) => { console.log(err) },
+            success: (data) => {
+                $("#{{ table }}").html('');
+                $("#{{ table }}").append($(data).find('#{{ table }} thead'));
+                $("#{{ table }}").append($(data).find('#{{ table }} tbody'));
+            }
+        }).done(f => {
+            console.log('ok!');
+        }).fail(f => {
+            console.log('fail!');
+        })
+    })
+</script>
